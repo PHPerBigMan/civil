@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+{include file="layout/head"}
+
+<body class="sticky-header">
+
+<section>
+    <!-- left side start-->
+    {include file="layout/sidebar"}
+    <!-- left side end-->
+
+    <!-- main content start-->
+    <div class="main-content" >
+
+        <!-- header section start-->
+        <div class="header-section">
+
+
+
+        <!--search start-->
+        <!-- <form class="searchform" action="index.html" method="post">
+            <input type="text" class="form-control" name="keyword" placeholder="Search here..." />
+        </form> -->
+        <!--search end-->
+
+        <!--notification menu start -->
+       {include file="layout/header"}
+        <!--notification menu end -->
+
+        </div>
+        <!-- header section end-->
+
+        <!-- page heading start-->
+        <div class="page-heading">
+            <h3>
+                修改轮播图
+            </h3>
+
+        </div>
+        <!-- page heading end-->
+
+        <!--body wrapper start-->
+        <div class="wrapper">
+        <div class="row">
+        <div class="col-sm-12">
+<section class="panel">
+<div class="col-sm-12" >
+    <form action="{:url('Settings/banner_update')}" method="post" id="myform" enctype="multipart/form-data">
+             <span style="color: red;padding-left: 340px">尺寸大小:730px*484px</span>
+                <div class="form-group row">
+                    <div class="left col-xs-3 text-right">
+                        <label for="">PC图片:</label>
+                    </div>
+                    <div class="right col-xs-8 text-left">
+                        <input type="file"  name="pc_banner">
+                    </div>
+
+                </div>
+
+                <div class="form-group row">
+                    <div class="left col-xs-3 text-right">
+                        <label for="">缩略:</label>
+                    </div>
+                    <div class="right col-xs-8 text-left">
+                        <img src="{$banner.pc_banner}" style="width: 250px;height: 150px;">
+                    </div>
+                </div>
+        <hr>
+                <div class="form-group row">
+                    <div class="left col-xs-3 text-right">
+                        <label for="">移动端图片:</label>
+                    </div>
+                    <div class="right col-xs-8 text-left" style="width: 230px">
+                        <input type="file"  name="cell_banner">
+
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="left col-xs-3 text-right">
+                        <label for="">缩略:</label>
+                    </div>
+                    <div class="right col-xs-8 text-left" >
+                        <img src="{$banner.cell_banner}" style="width: 250px;height: 150px;">
+                    </div>
+                </div>
+
+                <input type="hidden" name="id" value="{$banner.id}" />
+
+                <div class="form-group text-center submit">
+                    <button type="submit" class="btn btn-primary ">提交</button>
+                </div>
+    </form>
+    </div>
+</section>
+            </div>
+        </div>
+        <div class="row">
+        <div class="col-sm-12">
+        </div>
+        </div>
+        </div>
+        <!--body wrapper end-->
+
+        <!--footer section start-->
+        {include file="layout/footer"}
+        <!--footer section end-->
+
+
+    </div>
+    <!-- main content end-->
+</section>
+
+{include file="layout/js"}
+
+</body>
+</html>

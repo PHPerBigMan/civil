@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+{include file="layout/head"}
+
+<body class="main-content" >
+<section class="panel">
+<div class="col-sm-12" >
+    <form action="{:url('User/update_pwd')}" method="post" id="myform" >
+
+
+
+        <div class="form-group row">
+            <div class="left col-xs-3 text-right">
+            <label for="">输入密码:</label>
+            </div>
+            <div class="right col-xs-8 text-left">
+            <input type="password" class="form-control"  name="password" id="e_pwd"/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="left col-xs-3 text-right">
+            <label for="">再次输入密码:</label>
+            </div>
+            <div class="right col-xs-8 text-left">
+            <input type="password" class="form-control"  name="password2" id="e2_pwd"/>
+            </div>
+        </div>
+
+        <input type="hidden" name="id" value={$id} />
+        <div class="form-group text-center submit">
+            <button id="edit_pwd_sub" type="button" class="btn btn-primary ">提交</button>
+        </div>
+    </form>
+    </div>
+</section>
+<!-- Placed js at the end of the document so the pages load faster -->
+{include file="layout/js"}
+<script>
+    $('#edit_pwd_sub').on('click', function () {
+        if ($('#e_pwd').val() != $('#e2_pwd').val()  || $('#e_pwd').val() == '') {
+            alert('两次输入的密码不一致');
+        } else {
+            $('#myform').submit();
+        }
+    });
+</script>
+
+<!-- END JAVASCRIPTS -->
+</body>
+</html>

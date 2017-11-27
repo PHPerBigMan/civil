@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+{include file="layout/head"}
+
+<body class="sticky-header">
+
+<section>
+    {include file="layout/sidebar"}
+    <div class="main-content" >
+        <div class="header-section">
+
+       {include file="layout/header"}
+
+        </div>
+        <div class="page-heading">
+            <h3>
+                合同上传
+            </h3>
+
+        </div>
+        <div class="wrapper">
+        <div class="row">
+        <div class="col-sm-12">
+<section class="panel">
+<div class="col-sm-12" >
+    <form action="{:url('Settings/muban_update')}" method="post" id="myform" enctype="multipart/form-data">
+        <div class="form-group row">
+            <div class="left col-xs-3 text-right">
+                <label for="">上传合同（word）:</label>
+            </div>
+            <div class="right col-xs-8 text-left">
+                <input type="file" name="contract">
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="left col-xs-3 text-right">
+                <label for="">预览合同（pdf）:</label>
+            </div>
+            <div class="right col-xs-8 text-left">
+                <input type="file" name="pdf_contract">
+            </div>
+        </div>
+        <input type="hidden" name="id" value="" />
+        <div class="form-group text-center submit">
+            <button type="submit" class="btn btn-primary ">提交</button>
+            <input type="hidden" name="id" value="{$id}">
+        </div>
+    </form>
+    </div>
+</section>
+        </div>
+        </div>
+        </div>
+        {include file="layout/footer"}
+
+    </div>
+</section>
+
+{include file="layout/js"}
+
+</body>
+<script type="text/javascript">
+</script>
+</html>

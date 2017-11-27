@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+{include file="layout/head"}
+
+<body class="sticky-header">
+
+<section>
+    <!-- left side start-->
+    {include file="layout/sidebar"}
+    <!-- left side end-->
+
+    <!-- main content start-->
+    <div class="main-content" >
+
+        <!-- header section start-->
+        <div class="header-section">
+
+        <!--toggle button start-->
+
+        <!--toggle button end-->
+
+        <!--search start-->
+        <!-- <form class="searchform" action="index.html" method="post">
+            <input type="text" class="form-control" name="keyword" placeholder="Search here..." />
+        </form> -->
+        <!--search end-->
+
+        <!--notification menu start -->
+       {include file="layout/header"}
+        <!--notification menu end -->
+
+        </div>
+        <!-- header section end-->
+
+        <!-- page heading start-->
+        <div class="page-heading">
+            <h3>
+                {$title}
+            </h3>
+
+        </div>
+        <!-- page heading end-->
+
+        <!--body wrapper start-->
+        <div class="wrapper">
+        <div class="row">
+        <div class="col-sm-12">
+        <section class="panel">
+        <div class="panel-body">
+        <div class="adv-table">
+        <table  class="display table table-bordered table-striped" id="dynamic-table">
+        <thead>
+            <tr>
+                <th>登录名称</th>
+                <th>密码</th>
+                <th>权限</th>
+                <th class="hidden-phone">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach $info as $v}
+            <tr class="gradeX">
+
+                <td style="width: 50px">{$v.admin_name}</td>
+                <td style="width: 40px">{$v.admin_pwd}</td>
+                <td style="width: 600px">/</td>
+                <td class="center hidden-phone"  style="width: 150px">
+                    <!--<button class="btn btn-info c_edit" onclick="edit()">编辑</button>-->
+                    <a class="btn btn-info c_edit" href="{:url('Auser/edit')}?id={$v.id}">编辑</a>
+                </td>
+
+            </tr>
+            {/foreach}
+            </tbody>
+        </table>
+            </div>
+            </div>
+            {$info->render()}
+            </section>
+            </div>
+        </div>
+        <div class="row">
+        <div class="col-sm-12">
+
+        </div>
+        </div>
+        </div>
+        <!--body wrapper end-->
+
+        <!--footer section start-->
+        {include file="layout/footer"}
+        <!--footer section end-->
+
+
+    </div>
+    <!-- main content end-->
+</section>
+
+{include file="layout/js"}
+
+</body>
+<script>
+//    function edit() {
+//        layer.open({
+//            type: 2 //Page层类型
+//            ,area: ['500px', '300px']
+//            ,title: '你好，layer。'
+//            ,shade: 0.6 //遮罩透明度
+//            ,maxmin: true //允许全屏最小化
+//            ,anim: 2 //0-6的动画形式，-1不开启
+//            ,content: "{:url('Auser/edit')}"
+//            ,btn:['提交']
+//        });
+//
+//
+//    }
+</script>
+</html>

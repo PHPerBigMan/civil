@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+{include file="layout/head"}
+
+<body class="sticky-header">
+
+<section>
+    <!-- left side start-->
+    {include file="layout/sidebar"}
+    <!-- left side end-->
+
+    <!-- main content start-->
+    <div class="main-content" >
+
+        <!-- header section start-->
+        <div class="header-section">
+
+        <!--toggle button start-->
+
+        <!--toggle button end-->
+
+        <!--search start-->
+        <!-- <form class="searchform" action="index.html" method="post">
+            <input type="text" class="form-control" name="keyword" placeholder="Search here..." />
+        </form> -->
+        <!--search end-->
+
+        <!--notification menu start -->
+       {include file="layout/header"}
+        <!--notification menu end -->
+
+        </div>
+        <!-- header section end-->
+
+        <!-- page heading start-->
+        <div class="page-heading">
+            <h3>
+                轮播图列表
+            </h3>
+
+        </div>
+        <!-- page heading end-->
+
+        <!--body wrapper start-->
+        <div class="wrapper">
+        <div class="row">
+        <div class="col-sm-12">
+        <section class="panel">
+        <a href="{:url('Settings/banner_add')}" class="btn btn-success">新增轮播图</a>
+        <div class="panel-body">
+        <div class="adv-table">
+        <table  class="display table table-bordered table-striped" id="dynamic-table" >
+            <tbody>
+            <tr >
+                <th>缩略图</th>
+                <th>说明</th>
+                <th>缩略图</th>
+                <th>说明</th>
+                <th class="hidden-phone">操作</th>
+            </tr>
+
+            {foreach $banners as $v}
+            <tr class="gradeX">
+                <td><img src="{$v.pc_banner}" style="width: 100px;height: 50px;" /></td>
+                <td>PC端轮播图</td>
+                <td><img src="{$v.cell_banner}" style="width: 100px;height: 50px;" /></td>
+                <td>移动端轮播图</td>
+                <td class="center hidden-phone">
+                    <a class="btn btn-info" href="{:url('Settings/banner_edit')}?id={$v.id}">修改</a>
+                    <button class="btn btn-danger" onclick="del_banner('{$v.id}')">删除</button>
+                </td>
+            </tr>
+            {/foreach}
+
+            </tbody>
+            </table>
+            </div>
+            </div>
+            {$banners->render()}
+            </section>
+            </div>
+        </div>
+        <div class="row">
+        <div class="col-sm-12">
+        </div>
+        </div>
+        </div>
+        <!--body wrapper end-->
+
+        <!--footer section start-->
+        {include file="layout/footer"}
+        <!--footer section end-->
+
+
+    </div>
+    <!-- main content end-->
+</section>
+
+{include file="layout/js"}
+
+</body>
+<script>
+
+    function del_banner(id) {
+        layer.confirm('确定删除?', {btn: ['确定','取消'] }, function(){
+            window.location.href="{:url('Settings/banner_del')}?id="+id;
+        });
+    }
+</script>
+</html>

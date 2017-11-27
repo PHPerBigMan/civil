@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.15/css/jquery.dataTables.css">
+
+<!-- jQuery -->
+<script type="text/javascript" charset="utf8" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+
+<!-- DataTables -->
+<script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/1.10.15/js/jquery.dataTables.js"></script>
+<html lang="en">
+{include file="layout/head" /}
+
+
+<body class="sticky-header">
+
+<section>
+{include file="layout/sidebar" /}
+
+    <!-- main content start-->
+    <div class="main-content" >
+        <!-- header section start-->
+        <div class="header-section">
+                {include file="layout/header"}
+
+        </div>
+        <div class="wrapper" style="height: 340px">
+        <div class="row">
+            <div class="col-md-6">
+                <!--statistics start-->
+                <div class="row state-overview">
+                    <div class="col-md-6 col-xs-12 col-sm-6">
+                        <div class="panel purple">
+                            <div class="symbol">
+                                <i class="fa fa-gavel"></i>
+                            </div>
+                            <div class="state-value">
+                                <div class="value">{$user_count}</div>
+                                <div class="title">用户总量</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xs-12 col-sm-6">
+                        <div class="panel red">
+                            <div class="symbol">
+                                <i class="fa fa-tags"></i>
+                            </div>
+                            <div class="state-value">
+                                <div class="value">{$today_user}</div>
+                                <div class="title">今日新增用户</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row state-overview">
+                    <div class="col-md-6 col-xs-12 col-sm-6">
+                        <div class="panel blue">
+                            <div class="symbol">
+                                <i class="fa fa-money"></i>
+                            </div>
+                            <div class="state-value">
+                                <div class="value">{$today_visit}</div>
+                                <div class="title"> 今日访问量</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xs-12 col-sm-6">
+                        <div class="panel green">
+                            <div class="symbol">
+                                <i class="fa fa-eye"></i>
+                            </div>
+                            <div class="state-value">
+                                <div class="value">{$visit_count}</div>
+                                <div class="title">总访问量</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--statistics end-->
+            </div>
+            <div style="width: 450px;height: auto;margin-top: 320px;">
+            </div>
+        </div>
+        </div>
+                <!--<h3 >注册会员月访问排行:</h3>
+                <table id="table_month" class="display">
+
+                </table>
+
+                <h3 >注册会员日访问排行:</h3>
+                <table id="table_today" class="display">
+
+                </table>
+                <h3 >地区活跃度排行榜:</h3>
+                <table id="table_ip" class="display">
+
+                </table>
+
+                <h3 >公告发布列表:</h3>
+                <table id="table_notice" class="display">
+
+                </table>
+
+                <h3 >评价发送列表:</h3>
+                <table id="table_eva" class="display">
+
+                </table>-->
+
+        <table class="layui-table" lay-even="" lay-skin="nob">
+            <colgroup>
+                <col width="150">
+                <col width="150">
+                <col width="150">
+
+                <col>
+            </colgroup>
+            <thead>
+            <tr>
+                <th><a href="{:url('Settings/table')}?type=1">日访问统计</a></th>
+                <th><a href="{:url('Settings/table')}?type=2">月访问统计</a></th>
+                <th><a href="{:url('Settings/table')}?type=3">地区活跃度</a></th>
+
+            </tr>
+            <tr>
+                <th><a href="{:url('Settings/table')}?type=4">公告发布列表</a></th>
+                <th><a href="{:url('Settings/table')}?type=5"> 评价发送列表</a></th>
+                <th><a href="{:url('Settings/table')}?type=6"> 用户签约统计</a></th>
+            </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+        {include file="layout/footer" /}
+
+
+    </div>
+    <!-- main content end-->
+</section>
+
+
+{include file="layout/js" /}
+
+</body>
+<script>
+
+    $(function () {
+        $('#table_month').DataTable({
+            "paging": true,
+            "lengthChange": true,
+            "processing": true,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "ajax": "{:url('month_total')}",
+            "columns": [
+                {"title": "排名", "data": "foot"},
+                {"title": "用户名称", "data": "name"},
+                {"title": "访问次数", "data": "count_visit"},
+
+            ]
+
+        });
+    });
+
+    $(function () {
+        $('#table_today').DataTable({
+            "paging": true,
+            "lengthChange": true,
+            "processing": true,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "ajax": "{:url('day_total')}",
+            "columns": [
+                {"title": "排名", "data": "foot"},
+                {"title": "用户名称", "data": "name"},
+                {"title": "访问次数", "data": "count_visit"},
+
+            ]
+
+        });
+    });
+
+    $(function () {
+        $('#table_ip').DataTable({
+            "paging": true,
+            "lengthChange": true,
+            "processing": true,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "ajax": "{:url('ip_visit')}",
+            "columns": [
+                {"title": "地区", "data": "name"},
+
+            ]
+
+        });
+    });
+
+    $(function () {
+        $('#table_notice').DataTable({
+            "paging": true,
+            "lengthChange": true,
+            "processing": true,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "ajax": "{:url('notice_time')}",
+            "columns": [
+                {"title": "用户名", "data": "name"},
+                {"title": "发布次数", "data": "notice_time"},
+            ]
+
+        });
+    });
+
+    $(function () {
+        $('#table_eva').DataTable({
+            "paging": true,
+            "lengthChange": true,
+            "processing": true,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "ajax": "{:url('evaluate_time')}",
+            "columns": [
+                {"title": "用户名", "data": "name"},
+                {"title": "评价次数", "data": "evaluated_time"},
+            ]
+
+        });
+    });
+
+    $.extend($.fn.dataTable.defaults, {
+        language: {
+            "sProcessing": "处理中...",
+            "sLengthMenu": "显示 _MENU_ 项结果",
+            "sZeroRecords": "没有匹配结果",
+            "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+            "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+            "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+            "sInfoPostFix": "",
+            "sSearch": "搜索:",
+            "sUrl": "",
+            "sEmptyTable": "表中数据为空",
+            "sLoadingRecords": "载入中...",
+            "sInfoThousands": ",",
+            "oPaginate": {
+                "sFirst": "首页",
+                "sPrevious": "上页",
+                "sNext": "下页",
+                "sLast": "末页"
+            },
+            "oAria": {
+                "sSortAscending": ": 以升序排列此列",
+                "sSortDescending": ": 以降序排列此列"
+            }
+        },
+        buttons: true
+    });
+</script>
+</html>

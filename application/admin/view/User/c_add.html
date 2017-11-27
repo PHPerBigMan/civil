@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+{include file="layout/head"}
+
+<body class="sticky-header">
+
+<section>
+    {include file="layout/sidebar"}
+
+    <!-- main content start-->
+    <div class="main-content" >
+
+        <!-- header section start-->
+        <div class="header-section">
+
+
+        <!--search start-->
+        <!-- <form class="searchform" action="index.html" method="post">
+            <input type="text" class="form-control" name="keyword" placeholder="Search here..." />
+        </form> -->
+        <!--search end-->
+
+        <!--notification menu start -->
+        {include file="layout/header"}
+        <!--notification menu end -->
+
+        </div>
+        <!-- header section end-->
+
+        <!-- page heading start-->
+        <div class="page-heading">
+            <h3>
+                新增分类
+            </h3>
+
+        </div>
+        <!-- page heading end-->
+
+        <!--body wrapper start-->
+        <div class="wrapper">
+             <div class="row">
+                <div class="col-sm-12">
+                <section class="panel">
+                <header class="panel-heading">
+                    新增分类
+                </header>
+                <div class="panel-body">
+                <div class="adv-table editable-table ">
+                <div class="clearfix">
+
+
+                </div>
+                <div class="space15"></div>
+                    <form action="{:url('User/save')}" method="post">
+                        <table class="table table-striped table-hover table-bordered" id="editable-sample" style="width: 400px;">
+                            <thead>
+                            <tr>
+                                <th>一级分类</th>
+
+                            </tr>
+                            <tr>
+                                <th><input type="text"  name="first_lev" style="border-radius: 2%"></th>
+                            </tr>
+
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                        <input type="submit" value="提交" style="margin-left: 750px"; class="btn btn-success">
+                    </form>
+
+                </div>
+                </div>
+                </section>
+                </div>
+                </div>
+        </div>
+        <!--body wrapper end-->
+
+        <!--footer section start-->
+        {include file="layout/footer"}
+        <!--footer section end-->
+
+
+    </div>
+    <!-- main content end-->
+</section>
+
+<!-- Placed js at the end of the document so the pages load faster -->
+{include file="layout/js"}
+
+<!-- END JAVASCRIPTS -->
+<script>
+   $(function () {
+
+   })
+</script>
+
+</body>
+</html>

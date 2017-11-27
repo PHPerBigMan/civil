@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+{include file="layout/head"}
+
+<body class="sticky-header">
+
+<section>
+    <!-- left side start-->
+    {include file="layout/sidebar"}
+    <!-- left side end-->
+
+    <!-- main content start-->
+    <div class="main-content" >
+
+        <!-- header section start-->
+        <div class="header-section">
+
+
+
+        <!--search start-->
+        <!-- <form class="searchform" action="index.html" method="post">
+            <input type="text" class="form-control" name="keyword" placeholder="Search here..." />
+        </form> -->
+        <!--search end-->
+
+        <!--notification menu start -->
+       {include file="layout/header"}
+        <!--notification menu end -->
+
+        </div>
+        <!-- header section end-->
+
+        <!-- page heading start-->
+        <div class="page-heading">
+            <h3>
+                修改工艺介绍
+            </h3>
+
+        </div>
+        <!-- page heading end-->
+
+        <!--body wrapper start-->
+        <div class="wrapper">
+        <div class="row">
+        <div class="col-sm-12">
+<section class="panel">
+<div class="col-sm-12" >
+    <form action="{:url('Settings/technology_update')}" method="post" id="myform">
+        <div class="form-group row">
+            <div class="left col-xs-3 text-right">
+            <label for="">选择分类:</label>
+            </div>
+            <div class="right col-xs-8 text-left">
+            <select class="form-control" name="category_id">
+                {foreach $categorys as $v}
+                    <option {php} if($v['category_id'] == $technology['category_id']){ echo 'selected="selected"'; } {/php} value="{$v.category_id}">{$v.c_name}</option>
+                {/foreach}
+            </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="left col-xs-3 text-right">
+                <label for="">工艺名称:</label>
+            </div>
+            <div class="right col-xs-8 text-left">
+                <input type="text" class="form-control"  name="title" placeholder="" value="{$technology.title}">
+            </div>
+        </div>
+
+
+        <div class="form-group row">
+            <div class="left col-xs-3 text-right">
+            <label for="">工艺介绍:</label>
+            </div>
+            <div class="right col-xs-8 text-left">
+            <input type="text" class="form-control"  name="content" placeholder="" value="{$technology.content}">
+            </div>
+        </div>
+
+        <input type="hidden" name="id" value="{$technology.id}" />
+        <div class="form-group text-center submit">
+            <button type="submit" class="btn btn-primary ">提交</button>
+        </div>
+    </form>
+    </div>
+</section>
+            </div>
+        </div>
+        <div class="row">
+        <div class="col-sm-12">
+        </div>
+        </div>
+        </div>
+        <!--body wrapper end-->
+
+        <!--footer section start-->
+        {include file="layout/footer"}
+        <!--footer section end-->
+
+
+    </div>
+    <!-- main content end-->
+</section>
+
+{include file="layout/js"}
+
+</body>
+</html>

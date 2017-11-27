@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+{include file="layout/head"}
+
+<body class="sticky-header">
+
+<section>
+    <!-- left side start-->
+    {include file="layout/sidebar"}
+    <!-- left side end-->
+
+    <!-- main content start-->
+    <div class="main-content" >
+
+        <!-- header section start-->
+        <div class="header-section">
+
+        <!--toggle button start-->
+
+        <!--toggle button end-->
+
+        <!--search start-->
+        <!-- <form class="searchform" action="index.html" method="post">
+            <input type="text" class="form-control" name="keyword" placeholder="Search here..." />
+        </form> -->
+        <!--search end-->
+
+        <!--notification menu start -->
+       {include file="layout/header"}
+        <!--notification menu end -->
+
+        </div>
+        <!-- header section end-->
+
+        <!-- page heading start-->
+        <div class="page-heading">
+            <h3>
+                新闻列表
+            </h3>
+
+        </div>
+        <!-- page heading end-->
+
+        <!--body wrapper start-->
+        <div class="wrapper">
+        <div class="row">
+        <div class="col-sm-12">
+        <section class="panel">
+        <div class="panel-body">
+        <div class="adv-table">
+        <table  class="display table table-bordered table-striped" id="dynamic-table" >
+            <tbody>
+            <tr >
+                <th>新闻标题</th>
+                <th>新闻图片</th>
+                <th>新闻来源</th>
+                <th>时间</th>
+                <th class="hidden-phone">操作</th>
+            </tr>
+
+            {foreach $news as $v}
+            <tr class="gradeX">
+                <td>{$v.title}</td>
+                <td>{if condition="$v.img neq ''"}<img src="{$v.img}" style="width: 100px;height: 50px;" />{/if}</td>
+                <td>{$v.from}</td>
+                <td>{$v.time|date='Y-m-d H:i:s',###}</td>
+                <td class="center hidden-phone">
+                    <a class="btn btn-info" href="{:url('Settings/news_edit')}?id={$v.id}">编辑</a>
+                    <button class="btn btn-danger" onclick="del_news('{$v.id}')">删除</button>
+                </td>
+            </tr>
+            {/foreach}
+            </tbody>
+            </table>
+            </div>
+            </div>
+            {$news->render()}
+            </section>
+            </div>
+        </div>
+        <div class="row">
+        <div class="col-sm-12">
+        </div>
+        </div>
+        </div>
+        <!--body wrapper end-->
+
+        <!--footer section start-->
+        {include file="layout/footer"}
+        <!--footer section end-->
+
+
+    </div>
+    <!-- main content end-->
+</section>
+
+{include file="layout/js"}
+
+</body>
+<script>
+
+    function del_news(id) {
+        layer.confirm('确定删除?', {btn: ['确定','取消'] }, function(){
+            window.location.href="{:url('Settings/news_del')}?id="+id;
+        });
+    }
+</script>
+</html>

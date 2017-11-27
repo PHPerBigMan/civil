@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+{include file="layout/head"}
+
+<body class="sticky-header">
+
+<section>
+    <!-- left side start-->
+    {include file="layout/sidebar"}
+    <!-- left side end-->
+
+    <!-- main content start-->
+    <div class="main-content" >
+
+        <!-- header section start-->
+        <div class="header-section">
+
+        <!--toggle button start-->
+
+        <!--toggle button end-->
+
+        <!--search start-->
+        <!-- <form class="searchform" action="index.html" method="post">
+            <input type="text" class="form-control" name="keyword" placeholder="Search here..." />
+        </form> -->
+        <!--search end-->
+
+        <!--notification menu start -->
+       {include file="layout/header"}
+        <!--notification menu end -->
+
+        </div>
+        <!-- header section end-->
+
+        <!-- page heading start-->
+        <div class="page-heading">
+            <h3>
+                企业公告详情
+            </h3>
+
+        </div>
+        <!-- page heading end-->
+
+        <!--body wrapper start-->
+        <div class="wrapper">
+        <div class="row">
+        <div class="col-sm-12">
+        <section class="panel">
+        <header class="panel-heading">
+
+        </header>
+        <div class="panel-body">
+        <div class="adv-table">
+        <table  class="display table" id="dynamic-table">
+        <thead>
+
+
+        <tr>
+            <th>公告内容：</th>
+            <td>{$info.notice_content}</td>
+        </tr>
+        <tr>
+            <th>发布时间：</th>
+            <td>{$info.create_time|date='Y-m-d H:i:s',###}</td>
+        </tr>
+        <tr>
+            <th>公告图片：</th>
+            <td>
+                {eq name="info.notice_url[0]" value=""}
+                    暂未上传
+                {else}
+                    {foreach $info.notice_url as $v1}
+                    <img src="{$v1}" alt="" style="width: 80px;height: 80px">
+                    {/foreach}
+                {/eq}
+
+            </td>
+        </tr>
+        <tr>
+            <th>公告视频：</th>
+            <td>{$info.notice_video}</td>
+        </tr>
+        <tr>
+            <th>公告分类：</th>
+            <td>{$info.c_name}</td>
+        </tr>
+        <tr>
+            <th>是否最热：</th>
+            <th>
+            <form action="{:url('Notice/update_top')}" method="post" id="switch_is_top_form">
+               是 ： <input type="radio" onclick="switch_is_top()" value="1" name="is_top" {php}echo ($info['is_top'] == 1 && $info['stop_time']>time()) ? 'checked="checked"' : '';{/php}>
+               <!--否 ： <input type="radio" onclick="switch_is_top()" value="0" name="is_top" {php}echo ($info['is_top'] == 0 ) ? 'checked="checked"' : '';{/php}>-->
+               否 ： <input type="radio" onclick="switch_is_top()" value="0" name="is_top" {php}echo ($info['is_top'] == 0 ) ? 'checked="checked"' : '';{/php}>
+
+               <div id="is_top_time_div">
+               <br>
+               开始时间
+               <input type="text" name="start_time" onFocus="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss'})" value="{$info.start_time|date='Y-m-d H:i:s',###}" />
+               <br>
+               结束时间
+               <input type="text" name="stop_time" onFocus="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss'})" value="{$info.stop_time|date='Y-m-d H:i:s',###}" />
+               </div>
+               <input type="hidden" name="id" value="{$info.id}" />
+               <input type="submit"  value="修改" class="btn btn-primary">
+            </form>
+            </th>
+        </tr>
+        </thead>
+        </table>
+        </div>
+        </div>
+        </section>
+        </div>
+        </div>
+        <div class="row">
+        <div class="col-sm-12">
+
+        </div>
+        </div>
+        </div>
+        <!--body wrapper end-->
+
+        <!--footer section start-->
+        {include file="layout/footer"}
+        <!--footer section end-->
+
+
+    </div>
+    <!-- main content end-->
+</section>
+
+{include file="layout/js"}
+
+</body>
+<script>
+    function switch_is_top() {
+        var status = $('#switch_is_top_form input[name="is_top"]:checked').val();
+        if (status == 1) {
+            $('#is_top_time_div').css('display','block');
+        } else {
+            $('#is_top_time_div').css('display','none');
+        }
+    }
+    switch_is_top();
+</script>
+</html>

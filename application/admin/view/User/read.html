@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+{include file="layout/head"}
+
+<body class="sticky-header">
+<style>
+    #ul li{padding-top: 10px}
+</style>
+<section>
+    {include file="layout/sidebar"}
+    <div class="main-content" >
+        <div class="header-section">
+       {include file="layout/header"}
+        </div>
+        <div class="page-heading">
+            <h3>
+                企业信息
+            </h3>
+            <a style="float: right;margin-right: 50px;color: black;font-weight: bold"
+
+            <?php
+                if(input('type') == 0){
+                    echo "href = http://civil.gyl.sunday.so/admin/user/authentication" ;
+                }else if(input('type') == 1){
+                    echo "href = http://civil.gyl.sunday.so/admin/user/index" ;
+                }else if(input('type') == 2){
+                    echo "href = http://civil.gyl.sunday.so/admin/notice/user_notice" ;
+                }
+
+            ?>
+
+            >返回上一页</a>
+        </div>
+        <!-- page heading end-->
+
+        <!--body wrapper start-->
+        <div class="wrapper">
+        <div class="row">
+        <div class="col-sm-12">
+        <section class="panel">
+        <header class="panel-heading">
+
+        </header>
+        <div class="panel-body">
+        <div class="adv-table">
+            <?php if (! empty($info['id'])) { ?>
+            <form action="{:url('User/back_add')}" method="post" enctype="multipart/form-data">
+                <ul id="ul">
+                    <li>
+                        <span style="float: left">公司名称:</span>
+                        <div class="layui-input-block">
+                            <input type="text" name="company_name"   value="{$info.company_name}" autocomplete="off" class="layui-input">
+                        </div>
+                    </li>
+                    <li>
+                        <span style="float: left">公司地址:</span>
+                        <div class="layui-input-block">
+                            <input type="text" name="company_address"   value="{$info.company_address}"  autocomplete="off" class="layui-input">
+                        </div>
+                    </li>
+                    <li>
+                        <span style="float: left">联系方式:</span>
+                        <div class="layui-input-block">
+                            <input type="text" name="tel"   value="{$info.tel}"  autocomplete="off" class="layui-input">
+                        </div>
+                    </li>
+                    <li>
+                        <span style="float: left">QQ:</span>
+                        <div class="layui-input-block">
+                            <input type="text" name="qq"   value="{$info.qq}"  autocomplete="off" class="layui-input">
+                        </div>
+                    </li>
+                    <li>
+                        <span style="float: left">业务范围:</span>
+                        <div class="layui-input-block">
+                            <input type="text" name="business"   value="{$info.business}"  autocomplete="off" class="layui-input">
+                        </div>
+                    </li>
+                    <li>
+                        <span style="float: left">公司介绍:</span>
+                        <script id="introduce" type="text/plain" style="width:80%;height:300px;margin-left:110px" name="introduce">
+                        {$info.introduce}
+                    </script>
+                    </li>
+                    <li>
+                        <span style="float: left">公司图片:</span>
+                        <?php if (empty($info['head_pic'])) { ?><input type="file" name="head_pic" style="margin-left: 110px"><?php }else { ?>
+                        <img src="{$info.head_pic}" alt="" style="width: 200px;height: 200px;margin-left: 50px">
+                        <?php } ?>
+                    </li>
+                    <li>
+                        <span style="float: left;padding-top: 30px">宣传视频:</span>
+                        <?php if (empty($info['company_video'])) { ?><span style="margin-left: 50px">
+                        <div class="layui-input-block">
+                            <input type="text" name="company_video"   autocomplete="off" class="layui-input">
+                        </div>
+                        </span> <?php }else { ?>
+                        <iframe height=300 width=330 src="{$info['company_video']}" frameborder=0 allowfullscreen></iframe>
+                        <?php } ?>
+                    </li>
+                    <li>
+                        <span style="float: left">企业认证图片:</span>
+                        <input type="button" style="margin-left: 20px;margin-bottom: 20px" onclick="add()" value="添加相册">
+                        <?php if (empty($info['company_authentication'])) { ?>
+                        <div class="authentication">
+                            <input type="file" name="company_authentication[]" style="margin-left: 110px" >
+                        </div>
+
+                        <?php }else { ?>
+                        <div class="authentication">
+                        {foreach $info['company_authentication'] as $info1}
+
+                        <img src="{$info1}" alt="" style="width: 200px;height: 200px;margin: 3px;margin-left: 150px">
+
+                        {/foreach}
+                        </div>
+                        <?php } ?>
+                    </li>
+
+                </ul>
+                <div class="layui-form-item" style="margin-left: 600px">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit lay-filter="formDemo">提交</button>
+                        <input type="hidden" name="user_id" value="{$info['user_id']}">
+                    </div>
+                </div>
+            </form>
+
+            <?php } else { ?>
+            暂无企业信息
+            <?php } ?>
+        </div>
+        </div>
+        </section>
+        </div>
+        </div>
+        <div class="row">
+        <div class="col-sm-12">
+
+        </div>
+        </div>
+        </div>
+        {include file="layout/footer"}
+
+    </div>
+</section>
+
+{include file="layout/js"}
+
+</body>
+<script type="text/javascript" src="/lib/ueditor/1.4.3/ueditor.config.js"></script>
+<script type="text/javascript" src="/lib/ueditor/1.4.3/ueditor.all.min.js"> </script>
+<script type="text/javascript" src="/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js"></script>
+<script>
+    function more(id) {
+        window.location.href = "{:url('user/read')}"+"?id="+id;
+    }
+
+    var ue = UE.getEditor('introduce');
+
+    function add() {
+        var append = '<input type="file" name="company_authentication[]" style="margin-left: 110px;margin-top: 5px" >';
+        $('.authentication').append(append)
+    }
+</script>
+</html>

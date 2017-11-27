@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+{include file="layout/head"}
+
+<body class="sticky-header">
+
+<section>
+   {include file="layout/sidebar"}
+
+    <!-- left side end-->
+
+    <!-- main content start-->
+    <div class="main-content" >
+
+        <!-- header section start-->
+        <div class="header-section">
+
+        <!--toggle button start-->
+
+        <!--toggle button end-->
+
+        <!--search start-->
+        <!-- <form class="searchform" action="index.html" method="post">
+            <input type="text" class="form-control" name="keyword" placeholder="Search here..." />
+        </form> -->
+        <!--search end-->
+
+        <!--notification menu start -->
+            {include file="layout/header"}
+        <!--notification menu end -->
+
+        </div>
+        <!-- header section end-->
+
+        <!-- page heading start-->
+        <div class="page-heading">
+            <h3>
+                分类列表
+            </h3>
+            <a class="btn btn-primary" type="button" id="c_add">新增一级分类</a>
+        </div>
+        <!-- page heading end-->
+
+        <!--body wrapper start-->
+        <div class="wrapper">
+            <div class="row">
+                <div class="col-md-6">
+                    {foreach $first as $v}
+                    <div class="panel">
+                        <div class="panel-heading">
+
+                            <span id="c_name" c_id="{$v['category_id']}">{$v['c_name']}</span>
+                            <div style="float: right;">
+                                <button class="btn btn-danger " type="button" onclick="del('{$v.category_id}','删除一级分类')"> 删除</button>
+                            </div>
+                            <div style="float: right;margin-right: 16px;">
+                                <button class="btn btn-info c_edit" type="button" onclick="edit('{$v.c_name}','{$v.category_id}')">修改</button>
+                            </div>
+
+                            <div style="float: right;margin-right: 16px;">
+                                <button class="btn btn-info c_edit" type="button" onclick="Add('{$v.category_id}')">添加二级分类</button>
+                            </div>
+                            <div style="float: right;margin-right: 16px;">
+                                <a class="btn btn-info c_edit " type="button" href="{:url('user/img')}?category_id={$v.category_id}"> 分类图片编辑</a>
+                            </div>
+                            <div style="float: right;margin-right: 16px;">
+                                {eq name="v['is_show']" value="1"}
+                                <button class="btn btn-danger" onclick="tuijian('{$v.category_id}')" id="{$v.category_id}">取消推荐</button>
+                                {else/}
+                                <button class="btn btn-success" onclick="tuijian('{$v.category_id}')" id="{$v.category_id}">推荐</button>
+                                {/eq}
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div id="FlatTree" class="tree tree-plus-minus">
+                                <div class = "tree-folder" style="">
+                                    {foreach $second as $v0}
+                                    {eq name="$v0.pid" value="$v.category_id"}
+                                        <div class="tree-folder-header" style="height: 35px;">
+                                            <i class="fa-folder" onclick="show('{$v0.category_id}')"></i>
+                                            <div class="tree-folder-name">{$v0.c_name}</div>
+                                            <button class="btn btn-danger " type="button" onclick="c_del('{$v0.category_id}','删除二级分类')" style="width: 50px;float: right"> 删除</button>
+                                            <button class="btn btn-info " type="button" onclick="sec_edit('{$v0.c_name}','{$v0.category_id}')" style="width: 50px;float: right;margin-right: 10px">修改</button>
+                                            <button class="btn btn-info " type="button" onclick="add('{$v0.category_id}')" style="width: 110px;float: right;margin-right: 10px">添加三级分类</button>
+
+
+                                        </div>
+                                            {foreach $third as $v1}
+                                            {eq name="$v1.pid" value="$v0.category_id"}
+                                                    <div class="tree-loader" style="margin:10px 20px 20px 10px" id="{$v0.category_id}">
+                                                        {$v1.c_name}
+                                                        <!--<span >修改</span>-->
+                                                        <button class="btn btn-danger" style="width: 50px;float: right" onclick="c_del('{$v1.category_id}','删除三级分类')">删除</button>
+                                                        <button class="btn btn-info " style="width: 50px;float: right;margin-right: 10px" onclick="t_edit('{$v1.c_name}','{$v1.category_id}')">修改</button>
+                                                    </div>
+
+                                            {else/}{/eq}
+                                            {/foreach}
+                                    {else/}
+                                    {/eq}
+                                    {/foreach}
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    {/foreach}
+                </div>
+            </div>
+        </div>
+        <!--body wrapper end-->
+
+        <!--footer section start-->
+        {include file="layout/footer"}
+        <!--footer section end-->
+
+
+    </div>
+    <!-- main content end-->
+</section>
+
+<!-- Placed js at the end of the document so the pages load faster -->
+{include file="layout/js"}
+
+
+
+<script>
+    /*jQuery(document).ready(function() {
+        TreeView.init();
+    });*/
+
+    $(function () {
+        $('#c_add').click(function () {
+            layer.prompt({title: '添加一级分类', formType: 3}, function(content, index){
+                layer.close(index);
+                //ajax修改
+                $.post("{:url('user/save')}",
+                    {
+                        first_lev: content
+                    }, function (data, status) {
+                        if(status == 'success'){
+                            layer.msg('添加成功')
+                            window.location.reload();
+                        }
+                    });
+            });
+        })
+    })
+
+    function edit(c_name,c_id) {
+
+        layer.prompt({
+            formType: 3,
+            value: c_name,
+            title: '一级分类修改'
+        }, function(content, index, elem){
+            layer.close(index);
+            $.post("{:url('user/edit')}",
+                {
+                    first_lev: content,
+                    c_id: c_id
+                }, function (data, status) {
+                    if(status == 'success'){
+                        layer.msg('修改成功');
+                        window.location.reload();
+                    }else{
+                        layer.msg('修改失败');
+                        window.location.reload();
+                    }
+                });
+        });
+    }
+
+    function del(c_id,title) {
+        layer.confirm(title, {
+            btn: ['确定','取消'] //按钮
+        }, function(){
+            //ajax进行删除
+            $.post("{:url('user/del')}",{
+                c_id : c_id
+            },function (data,status) {
+                if(status = 'success'){
+                    layer.msg(data)
+                    window.location.reload();
+                }else{
+                    layer.msg(data)
+                    window.location.reload();
+                }
+            })
+        }, function(){
+            layer.msg('取消删除')
+        });
+    }
+
+
+    function c_del(c_id,title) {
+        layer.confirm(title, {
+            btn: ['确定','取消'] //按钮
+        }, function(){
+            //ajax进行删除
+            $.post("{:url('user/c_del')}",{
+                c_id : c_id
+            },function (data,status) {
+                if(status = 'success'){
+                    layer.msg(data)
+                    window.location.reload();
+                }else{
+                    layer.msg(data)
+                    window.location.reload();
+                }
+            })
+        }, function(){
+            layer.msg('取消删除')
+        });
+    }
+
+    function Add(c_id) {
+        layer.prompt({title: '添加二级分类', formType: 3}, function(content, index){
+
+            layer.close(index);
+            //ajax修改
+            $.post("{:url('user/save')}",
+                {
+                    p_id: c_id,
+                    c_name: content,
+
+                }, function (data, status) {
+                    if(status == 'success'){
+                        layer.msg('添加成功')
+                        window.location.reload();
+                    }
+                });
+        });
+    }
+
+
+
+    function add(c_id) {
+        layer.prompt({title: '添加三级分类', formType: 3}, function(content, index){
+
+            layer.close(index);
+            //ajax修改
+            $.post("{:url('user/new_save')}",
+                {
+                    p_id: c_id,
+                    c_name: content,
+
+                }, function (data, status) {
+                    if(status == 'success'){
+                        layer.msg('添加成功')
+                        window.location.reload();
+                    }
+                });
+        });
+    }
+
+
+
+    function sec_edit(c_name,c_id) {
+        layer.prompt({
+            formType: 3,
+            value: c_name,
+            title: '二级分类修改'
+        }, function(content, index, elem){
+            layer.close(index);
+            $.post("{:url('user/edit')}",
+                {
+                    first_lev: content,
+                    c_id: c_id
+                }, function (data, status) {
+                    if(status == 'success'){
+                        layer.msg('修改成功');
+                        window.location.reload();
+                    }else{
+                        layer.msg('修改失败');
+                        window.location.reload();
+                    }
+                });
+        });
+    }
+
+    function t_edit(c_name,c_id) {
+        layer.prompt({
+            formType: 3,
+            value: c_name,
+            title: '三级分类修改'
+        }, function(content, index, elem){
+            layer.close(index);
+            $.post("{:url('user/edit')}",
+                {
+                    first_lev: content,
+                    c_id: c_id
+                }, function (data, status) {
+                    if(status == 'success'){
+                        layer.msg('修改成功');
+                        window.location.reload();
+                    }else{
+                        layer.msg('修改失败');
+                        window.location.reload();
+                    }
+                });
+        });
+    }
+
+    function show(id) {
+        $(this).attr('class','')
+    }
+
+    function tuijian(id) {
+        $.post("{:url('user/category_tui')}",
+            {
+                id: id
+            }, function (data, status) {
+                layer.msg(data.msg)
+                var val= document.getElementById(id);
+                if(data.status == 100){
+                    val.innerText='取消推荐';
+                    val.className = 'btn btn-danger';
+                }else{
+                    val.innerText='推荐';
+                    val.className='btn btn-success';
+                }
+            });
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="80a25450-ea73-44b0-9793-82d19c988c29" name="civil.gyl.sunday.so" url="http://civil.gyl.sunday.so">
+        <fileTransfer host="civil.gyl.sunday.so" port="22" rootFolder="/alidata/www/develops/civil" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

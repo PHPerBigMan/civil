@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+{include file="layout/head"}
+
+<body class="sticky-header">
+
+<section>
+    {include file="layout/sidebar"}
+    <div class="main-content" >
+
+        <div class="header-section">
+
+       {include file="layout/header"}
+        </div>
+        <div class="page-heading">
+            <h3>
+                新闻采集
+            </h3>
+        </div>
+
+<section class="panel">
+<div class="col-sm-12" >
+    <div>
+        <label class="layui-form-label" style="padding: 9px 10px">网址：</label>
+        <div class="layui-input-block">
+            <span style="color: red">中国工程机械租赁网:</span>
+
+            <a href="http://www.zulinnet.com" target="_blank" style="color: black">www.zulinnet.com </a>
+        </div>
+        <div class="layui-input-block">
+            <span style="color: red">中国工程建设网:&nbsp;&nbsp;</span>
+
+            <a href="http://www.chinacem.com.cn" target="_blank" style="color: black">www.chinacem.com.cn</a>
+        </div>
+        <div class="layui-input-block">
+            <span style="color: red">造价通: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+
+            <a href="http://www.zjtcn.com" target="_blank" style="color: black">www.zjtcn.com</a>
+        </div>
+        <div class="layui-input-block">
+            <span style="color: red">中国工程机械品牌网:</span>
+            <a href="http://www.ccm-1.com" target="_blank" style="color: black">www.ccm-1.com</a>
+        </div>
+
+        <div class="layui-input-block">
+            <span style="color: red">土木工程网:</span>
+            <a href="http://www.civilcn.com/" target="_blank" style="color: black">www.ccm-1.com</a>
+        </div>
+
+    </div>
+    <form class="layui-form" action="">
+
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="padding: 9px 10px">新闻来源</label>
+            <div class="layui-input-block">
+                <select name="web_site" lay-verify="required" onchange="get()">
+                    <option value=""></option>
+                    <option value="0" selected="selected" >中国工程机械租赁网</option>
+                    <option value="1" >中国工程建设网</option>
+                    <option value="2" >造价通</option>
+                    <option value="3" >中国工程机械品牌网</option>
+                    <option value="4" >土木工程网</option>
+                </select>
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="padding: 9px 10px">新闻详情页网址</label>
+            <div class="layui-input-block">
+                <input type="text" name="url" required  lay-verify="required" placeholder="请输入新闻详情页网址" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+
+
+        <div class="layui-form-item" style="margin-left: 600px">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="formDemo">采集</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+
+    </div>
+    {include file="layout/footer"}
+</section>
+<!-- Placed js at the end of the document so the pages load faster -->
+{include file="layout/js"}
+
+<!-- END JAVASCRIPTS -->
+</body>
+<script>
+    //Demo
+    layui.use('form', function(){
+        var form = layui.form();
+
+        //监听提交
+        form.on('submit(formDemo)', function(data){
+            //进行ajax提交处理
+//            layer.msg(JSON.stringify(data.field));
+
+            var url         = data['field']['url'];
+            var web_site    = data['field']['web_site'];
+            $.post("{:url('Auser/get_news')}", { url: url, web_site: web_site },
+                function(data){
+                    if(data == 200){
+                        layer.msg("采集成功")
+                        location.reload();
+                    }else if(data == 100){
+                        layer.msg("采集失败")
+                    }
+                });
+            return false;
+        });
+    });
+
+    function get(id) {
+        alert(1)
+    }
+</script>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+{include file="layout/head"}
+<body class="sticky-header">
+<section>
+    {include file="layout/sidebar"}
+    <div class="main-content" >
+        <div class="header-section">
+       {include file="layout/header"}
+        </div>
+        <div class="page-heading">
+            <h3>
+                企业列表 &nbsp;<span style="color:red;">(未完善企业信息)</span>
+            </h3>
+
+        </div>
+        <div class="wrapper">
+        <div class="row">
+        <div class="col-sm-12">
+        <section class="panel">
+            <div class="mt-20">
+                <table id="user" class="display table table-bordered table-striped">
+
+                </table>
+            </div>
+
+        {include file="layout/footer"}
+
+</section>
+
+{include file="layout/js"}
+
+</body>
+
+
+<script>
+    function more(id) {
+        window.location.href = "{:url('user/read')}"+"?id="+id+'&type=1';
+    }
+
+    function tuijian(id) {
+        $.post("{:url('user/T_edit')}",
+            {
+                id: id
+            }, function (data, status) {
+                layer.msg(data.msg)
+                var val= document.getElementById(id);
+                if(data.status == 100){
+                    val.innerText='取消推荐';
+                    val.className = 'btn btn-danger';
+                }else if(data.status == 101){
+                    val.innerText='首页推荐';
+                    val.className='btn btn-success';
+                }else if(data.status == 300){
+                    val.innerText='首页推荐';
+                    val.className='btn btn-success';
+                }
+            });
+    }
+    function edit (id) {
+        layer.open({
+        title:'修改密码',
+        type: 2,
+        area: ['500px', '210px'],
+        fix: false, //不固定
+        maxmin: true,
+        content: '{:url("User/edit_pwd")}?id='+id,
+        success:function(layero,index){
+        },
+        end:function(){
+            if (parent.$("#handle_status").val() == 1) {
+                layer.msg('修改成功',{
+                    icon: 1,
+                    time: 1000
+                },function(){
+                    history.go(0);
+                });
+                parent.$("#handle_status").val('0');
+            }
+        }
+    });
+    }
+
+    $(function () {
+        $('#user').DataTable({
+            "paging": true,
+            "lengthChange": true,
+            "processing": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "ajax": "{:url('User/user_ajax_no')}",
+            "columns": [
+                {"title": "ID", "data": "id"},
+                {"title": "账号", "data": "login_cell"},
+                {"title": "微信昵称", "data": "little_name"},
+                {"title": "微信头像", "data": "head_img"},
+                {"title": "注册时间", "data": "register_time"},
+                {"title": "操作", "data": "caozuo"},
+            ]
+
+        });
+    });
+
+    $.extend($.fn.dataTable.defaults, {
+        language: {
+            "sProcessing": "处理中...",
+            "sLengthMenu": "显示 _MENU_ 项结果",
+            "sZeroRecords": "没有匹配结果",
+            "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+            "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+            "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+            "sInfoPostFix": "",
+            "sSearch": "搜索:",
+            "sUrl": "",
+            "sEmptyTable": "表中数据为空",
+            "sLoadingRecords": "载入中...",
+            "sInfoThousands": ",",
+            "oPaginate": {
+                "sFirst": "首页",
+                "sPrevious": "上页",
+                "sNext": "下页",
+                "sLast": "末页"
+            },
+            "oAria": {
+                "sSortAscending": ": 以升序排列此列",
+                "sSortDescending": ": 以降序排列此列"
+            }
+        },
+        buttons: true
+    });
+
+    function del(id) {
+        layer.confirm('确定删除？', {
+            btn: ['确定','取消'] //按钮
+        }, function(){
+            $.post('udel',{id:id},function (obj) {
+                if(obj.code == 200){
+                    layer.msg(obj.msg,{type:1})
+                }else{
+                    layer.msg(obj.msg,{type:2})
+                }
+                setTimeout(function () {
+                    layer.closeAll();
+                    location.reload();
+                },1000)
+            })
+        }, function(){
+        });
+    }
+</script>
+</html>

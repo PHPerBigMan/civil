@@ -1,0 +1,30 @@
+<div class="am-form-group">
+    <label for="doc-select-1" style="float: left;margin-right: 30px;margin-top: 50px;margin-left: 5px">认证等级:</label>
+    <select id="doc-select-1" style="width: 300px;margin-top: 50px">
+        <option value="0">取消认证</option>
+        <option value="1">初级认证</option>
+        <option value="2">高级认证</option>
+    </select>
+    <button onclick="save()">确认</button>
+    <input type="hidden" id="id" value="{$id}">
+</div>
+
+<script type="text/javascript" charset="utf8" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="/static/admin/js/layer.js"></script>
+
+<script>
+    function save() {
+        var level = $('#doc-select-1').val();
+        var id = $('#id').val();
+        layer.confirm("确认修改?",['是','否'],function () {
+            $.post("{:url('user/a_edit')}",{level:level,id:id},function (data) {
+                if(data.code == 200){
+                    layer.msg('修改成功',{icon:1,time:1500});
+                    setTimeout(function () {
+                        parent.location.reload()
+                    },1000)
+                }
+            })
+        })
+    }
+</script>

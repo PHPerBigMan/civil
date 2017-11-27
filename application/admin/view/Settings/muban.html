@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+{include file="layout/head"}
+
+<body class="sticky-header">
+
+<section>
+    {include file="layout/sidebar"}
+    <div class="main-content" >
+        <div class="header-section">
+       {include file="layout/header"}
+        </div>
+        <div class="page-heading">
+            <h3>
+                模板合同
+            </h3>
+
+        </div>
+        <!-- page heading end-->
+
+        <!--body wrapper start-->
+        <div class="wrapper">
+        <div class="row">
+            <a href="{:url('Settings/muban_new')}" class="btn btn-success" style="margin-left: 20px;margin-bottom: 20px">新增合同</a>
+        <div class="col-sm-12">
+        <section class="panel">
+        <div class="panel-body">
+        <div class="adv-table">
+        <table  class="display table table-bordered table-striped" id="dynamic-table" >
+            <tbody>
+            <tr >
+                <th>ID</th>
+                <th>合同名称</th>
+                <th>添加时间</th>
+                <th class="hidden-phone">操作</th>
+            </tr>
+            {foreach $data as $v}
+            <tr class="gradeX">
+                <td>{$v.id}</td>
+                <td>{$v.contract_name}</td>
+                <td>{$v.create_time|date='Y-m-d H:i:s',###}</td>
+                <td class="center hidden-phone">
+                    <a class="btn btn-info" href="{:url('Settings/muban_edit')}?id={$v.id}">编辑</a>
+                    <button class="btn btn-danger" onclick="del('{$v.id}')">删除</button>
+                </td>
+            </tr>
+            {/foreach}
+            </tbody>
+            </table>
+            </div>
+            </div>
+            </section>
+            </div>
+        </div>
+        <div class="row">
+        <div class="col-sm-12">
+        </div>
+        </div>
+        </div>
+        {include file="layout/footer"}
+    </div>
+</section>
+
+{include file="layout/js"}
+
+</body>
+<script>
+
+    function del(id) {
+        layer.confirm('确定删除?', {btn: ['确定','取消'] }, function(){
+            $.post("{:url('Settings/muban_del')}",{id:id},function (data) {
+                if(data == 200){
+                    layer.msg('删除成功',{icon:1,time:1000});
+                    location.reload();
+                }
+            })
+        });
+    }
+</script>
+</html>

@@ -1,0 +1,126 @@
+<!-- left side start-->
+<div class="left-side sticky-left-side">
+
+    <!--logo and iconic logo start-->
+    <div class="logo">
+        <a href="{:url('index/index')}"><img src="/static/admin/images/logo.png" alt=""></a>
+    </div>
+
+    <div class="logo-icon text-center">
+        <a href="index.html"><img src="/static/admin/images/logo_icon.png" alt=""></a>
+    </div>
+    <!--logo and iconic logo end-->
+
+    <div class="left-side-inner">
+        <!--sidebar nav start-->
+        <ul class="nav nav-pills nav-stacked custom-nav">
+            <!-- <li class="active"><a href="index.html"><i class="fa fa-home"></i> <span>Dashboard</span></a></li> -->
+            {php}
+                $title_arr = [
+                    '权限管理',
+                    '账号管理',
+                    '管理员信息编辑'
+                ];
+            {/php}
+            <li class="menu-list {php}echo in_array($title,$title_arr)?'nav-active':'';{/php}"><a href=""><i class="fa fa-laptop"></i> <span>账号管理</span></a>
+                <ul class="sub-menu-list">
+                    <!--<li><a href="{:url('Auser/Cando')}"> 权限管理 </a></li>-->
+                    <li><a href="{:url('Auser/index')}"> 账号设置 </a></li>
+                </ul>
+            </li>
+            {php}
+                $title_arr = [
+                    '企业分类',
+                    '企业列表',
+                    '企业列表',
+                    '认证企业',
+                    '企业信息',
+                    '分类图片管理'
+                ];
+            {/php}
+            <li class="menu-list {php}echo in_array($title,$title_arr)?'nav-active':'';{/php}"><a href=""><i class="fa fa-book"></i> <span>企业管理</span></a>
+                <ul class="sub-menu-list">
+                    <li><a href="{:url('user/category')}"> 企业分类</a></li>
+                    <li><a href="{:url('user/index')}"> 企业列表(已完善信息)</a></li>
+                    <li><a href="{:url('user/index_no')}"> 企业列表(未完善信息)</a></li>
+                    <li><a href="{:url('user/authentication')}"> 认证企业 </a></li>
+                </ul>
+            </li>
+            {php}
+                $title_arr = [
+                    '合同列表(未签订)',
+                    '合同列表(已签订)',
+                    '合同详情'
+                ];
+            {/php}
+            <li class="menu-list {php}echo in_array($title,$title_arr)?'nav-active':'';{/php}"><a href=""><i class="fa fa-file-text"></i> <span>合同管理</span></a>
+                <ul class="sub-menu-list">
+                    <li><a href="{:url('customer/index')}"> 合同列表(未签订) </a></li>
+                    <li><a href="{:url('customer/indexed')}"> 合同列表(已签订) </a></li>
+                </ul>
+            </li>
+            {php}
+                $title_arr = [
+                    '企业公告',
+                    '网站公告',
+                    '公告详情'
+                ];
+            {/php}
+            <li class="menu-list {php}echo in_array($title,$title_arr)?'nav-active':'';{/php}"><a href=""><i class="fa fa-cogs"></i> <span>公告管理</span></a>
+                <ul class="sub-menu-list">
+                    <li><a href="{:url('notice/user_notice')}"> 企业公告</a></li>
+                    <li><a href="{:url('notice/web_notice')}"> 网站公告</a></li>
+                </ul>
+            </li>
+            {php}
+                $title_arr = [
+                    'Logo管理',
+                    '新闻管理',
+                    '轮播图管理',
+                    '轮播图添加',
+                    '轮播图修改',
+                    '工艺介绍新增',
+                    '工艺介绍修改',
+                    '工艺介绍',
+                    '新闻采集',
+                    '网站统计',
+                    '新闻修改',
+                    '统计列表',
+                    '签订合同详细列表',
+                    '模板合同列表',
+                    '模板合同编辑',
+                    '模板合同新增',
+                    '网站底部信息管理',
+                    '网站底部信息列表',
+                    '信息编辑'
+                ];
+            {/php}
+            <li class="menu-list {php}echo in_array($title,$title_arr)?'nav-active':'';{/php}"><a href=""><i class="fa fa-bar-chart-o"></i> <span>网站管理</span></a>
+                <ul class="sub-menu-list">
+                    <!--li><a href="{:url('Settings/logo')}"> Logo管理 </a></li>-->
+                    <li><a href="{:url('Settings/news')}"> 新闻管理</a></li>
+                    <li><a href="{:url('Settings/banners')}"> 轮播图管理 </a></li>
+                    <li><a href="{:url('Settings/technologys')}"> 工艺介绍</a></li>
+                    <li><a href="{:url('Auser/news')}"> 新闻采集</a></li>
+                    <li><a href="{:url('Settings/index')}"> 网站统计</a></li>
+                    <li><a href="{:url('Settings/muban')}"> 模板合同</a></li>
+                    <li><a href="{:url('Settings/site_foot')}"> 网站底部信息管理</a></li>
+                </ul>
+            </li>
+            {php}
+            $title_arr = [
+            '增加新用户',
+            ];
+            {/php}
+            <li class="menu-list {php}echo in_array($title,$title_arr)?'nav-active':'';{/php}"><a href=""><i class="fa fa-cogs"></i> <span>增加新用户</span></a>
+                <ul class="sub-menu-list">
+                    <li><a href="{:url('add/index')}"> 增加新用户</a></li>
+                </ul>
+            </li>
+
+        </ul>
+        <!--sidebar nav end-->
+
+    </div>
+</div>
+<!-- left side end-->

@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+{include file="layout/head"}
+
+<body class="sticky-header">
+
+<section>
+    <!-- left side start-->
+    {include file="layout/sidebar"}
+    <div class="main-content" >
+        <div class="header-section">
+       {include file="layout/header"}
+        </div>
+        <table style="width: 800px;margin:20px 100px" class="div-table">
+            <tr>
+                <td class="text-align">
+                    添加头图
+                </td>
+                <td>
+                    <div class="layui-upload">
+                        <button type="button" class="layui-btn" id="test1">添加头图</button>
+                        <input type="hidden" name="head_pic" id="head_pic">
+                        <div class="layui-upload-list">
+                            <img class="layui-upload-img add-img" id="demo1">
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-align">
+                    公司名称
+                </td>
+                <td>
+                    <input type="text" name="company_name"  id="company_name" placeholder="请输入" autocomplete="off" class="div-layui-input">
+                </td>
+            </tr>
+            <tr>
+                <td  class="text-align">
+                    企业地址
+                </td>
+                <td class="class-select">
+                    <select name="province" lay-filter="city" id="province" class="div-select-add" onchange="city()">
+                        {volist name="province" id="vo"}
+                        <option value="{$vo.provinceID}">{$vo.province}</option>
+                        {/volist}
+                    </select>
+                    <select name="city" lay-filter="area" id="city" class="div-select-add" onchange="area()">
+                        {volist name="city" id="vo"}
+                        <option value="{$vo.cityID}">{$vo.city}</option>
+                        {/volist}
+                    </select>
+                    <select name="area" id="area" class="div-select-add">
+                        {volist name="area" id="vo"}
+                        <option value="{$vo.areaID}">{$vo.area}</option>
+                        {/volist}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-align">
+                    联系人
+                </td>
+                <td>
+                    <input type="text" name="name" id="name" placeholder="请输入" autocomplete="off" class="div-layui-input">
+                </td>
+            </tr>
+            <tr>
+                <td class="text-align">
+                    联系方式
+                </td>
+                <td>
+                    <input type="text" name="tel" id="tel" placeholder="请输入" autocomplete="off" class="div-layui-input">
+                </td>
+            </tr>
+            <tr>
+                <td class="text-align">
+                    商务QQ(选填)
+                </td>
+                <td>
+                    <input type="text" name="qq" id="qq" placeholder="请输入" autocomplete="off" class="div-layui-input">
+                </td>
+            </tr>
+            <tr>
+                <td class="text-align">
+                    企业简介
+                </td>
+                <td>
+                    <div style="float: left">
+                        <script id="editor" type="text/plain"  name="introduce"></script>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-align">
+                    业务范围
+                </td>
+                <td class="class-select">
+                    <div style="cursor: pointer;margin: 20px 0px;">
+                        <a onclick="select()" style="color: blue">点击选择业务范围</a>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-align">
+                    添加视频(选填)
+                </td>
+                <td>
+                    <input type="text" name="company_video"  id="company_video" placeholder="请输入" autocomplete="off" class="div-layui-input">
+                </td>
+            </tr>
+            <tr>
+                <td class="text-align">
+                    资格认证(选填)
+                </td>
+                <td>
+                    <div class="layui-upload">
+                        <button type="button" class="layui-btn" id="test2">多图片上传</button>
+                        <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
+                            预览图：
+                            <div class="layui-upload-list" id="demo2"></div>
+                        </blockquote>
+                    </div>
+                    <input type="hidden" name="company_authentication" id="company_authentication">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button class="layui-btn" onclick="submit()">立即提交</button>
+                </td>
+            </tr>
+        </table>
+
+        <div class="row cl cat" style="display: none">
+            <label class="form-label col-xs-4 col-sm-3"></label>
+            <div class="formControls col-xs-8 col-sm-9">
+                {volist name="cat" id="vo"}
+                <dl class="permission-list">
+                    <dt>
+                        <label>
+                            <!--<input type="checkbox" value="" name="user-Character-0" id="user-Character-0">-->
+                            {$vo.c_name}
+                        </label>
+                    </dt>
+                    <dd>
+                        <dl class="cl permission-list2">
+                            <dt>
+                                {if condition="$vo['child'] neq ''"}
+                                    {volist name="$vo['child']" id="v1"}
+                                        <label class="">
+                                            {if condition="$v1['c_name'] neq ''"}
+                                                <input type="checkbox" value="{$v1.category_id}"  name="catList" class="catList">
+                                                {$v1['c_name']}:
+                                                {volist name="$v1['child']" id="v2"}
+                                                    {if condition="$v2['c_name'] neq ''"}
+                                                        <label class="">
+                                                            <input type="checkbox"  value="{$v2.category_id}" name="catList" class="catList">
+                                                             {$v2.c_name}
+                                                        </label>
+                                                    {/if}
+                                                {/volist}
+                                            {/if}
+                                        </label>
+                                    {/volist}
+                                {else /}
+                                {/if}
+                            </dt>
+                        </dl>
+                    </dd>
+                </dl>
+                {/volist}
+            </div>
+            <input type="hidden" id="catList" value="1">
+            <button class="layui-btn" onclick="getAll()" style="margin-left: 450px;margin-bottom: 20px">确定</button>
+        </div>
+
+        <!--{include file="layout/footer"}-->
+    </div>
+</section>
+
+{include file="layout/js"}
+<script type="text/javascript" src="/lib/ueditor/1.4.3/ueditor.config.js"></script>
+<script type="text/javascript" src="/lib/ueditor/1.4.3/ueditor.all.min.js"> </script>
+<script type="text/javascript" src="/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js"></script>
+
+</body>
+<script type="text/javascript">
+    var ue = UE.getEditor('editor',{
+        initialFrameWidth:800,
+        initialFrameHeight:320
+    });
+
+
+    layui.use('layedit', function(){
+        var layedit = layui.layedit
+            ,$ = layui.jquery;
+
+        //构建一个默认的编辑器
+        var index = layedit.build('LAY_demo1');
+
+        //编辑器外部操作
+        var active = {
+            content: function(){
+                alert(layedit.getContent(index)); //获取编辑器内容
+            }
+            ,text: function(){
+                alert(layedit.getText(index)); //获取编辑器纯文本内容
+            }
+            ,selection: function(){
+                alert(layedit.getSelection(index));
+            }
+        };
+
+        $('.site-demo-layedit').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+        //自定义工具栏
+        layedit.build('introduce', {
+            tool: ['face', 'link', 'unlink', '|', 'left', 'center', 'right']
+            ,height: 200
+        });
+
+
+    });
+
+
+    layui.use('upload', function(){
+        var $ = layui.jquery
+            ,upload = layui.upload;
+
+        //普通图片上传
+        var uploadInst = upload.render({
+            elem: '#test1'
+            ,url: '/admin/add/img'
+            ,before: function(obj){
+                //预读本地文件示例，不支持ie8
+                obj.preview(function(index, file, result){
+                    $('#demo1').attr('src', result); //图片链接（base64）
+                });
+            }
+            ,done: function(res){
+                //如果上传失败
+                if(res.code > 0){
+                    return layer.msg('上传失败');
+                }
+                $("#head_pic").val(res.data);
+                //上传成功
+            }
+            ,error: function(){
+                //演示失败状态，并实现重传
+                var demoText = $('#demoText');
+                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-mini demo-reload">重试</a>');
+                demoText.find('.demo-reload').on('click', function(){
+                    uploadInst.upload();
+                });
+            }
+        });
+        var company_authentication =  [];
+        upload.render({
+            elem: '#test2'
+            ,url: '/admin/add/img'
+            ,multiple: true
+            ,before: function(obj){
+                //预读本地文件示例，不支持ie8
+                obj.preview(function(index, file, result){
+                    $('#demo2').append('<img src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img" style="width: 100px;height: 100px">')
+                });
+            }
+            ,done: function(res){
+                //上传完毕
+                company_authentication.push(res.data);
+                $('#company_authentication').val(company_authentication);
+            }
+        });
+    });
+
+//    $(function () {
+//        $.post('/admin/add/cat',{fid:1},function (obj) {
+//            $("#sec-1").empty();
+//            $("#sec-1").append(obj.sec);
+//
+//            $("#th-1").empty();
+//            $("#th-1").append(obj.third);
+//        });
+//    });
+
+    function cat(type) {
+        var fid = $("#cat-"+type+" option:selected").val();
+        $.post('/admin/add/cat',{fid:fid},function (obj) {
+                $("#sec-"+type).empty();
+                $("#sec-"+type).append(obj.sec);
+
+                $("#th-"+type).empty();
+                $("#th-"+type).append(obj.third);
+        });
+    }
+
+    function sec(type) {
+        var fid = $("#sec-"+type+" option:selected").val();
+        $.post('/admin/add/catSec',{fid:fid},function (obj) {
+            $("#th-"+type).empty();
+            $("#th-"+type).append(obj.th);
+        });
+    }
+
+    function add() {
+//        $('.div-select').append($('.div-select').clone())
+    }
+
+    function city() {
+        var father = $("#province option:selected").val();
+        $.post('/admin/add/city',{father:father},function (obj) {
+            $('#city').empty();
+            $('#city').append(obj.city);
+
+            $('#area').empty();
+            $('#area').append(obj.area);
+        });
+    }
+
+    function area() {
+        var father = $("#city option:selected").val();
+        $.post('/admin/add/area',{father:father},function (obj) {
+            $('#area').empty();
+            $('#area').append(obj);
+        });
+    }
+
+    function submit() {
+        var head_pic            = $('#head_pic').val();
+        var company_name        = $('#company_name').val();
+        var provinceId          = $('#province option:selected').val();
+        var cityId              = $('#city option:selected').val();
+        var areaId              = $('#area option:selected').val();
+        var province            = $('#province option:selected').text();
+        var city                = $('#city option:selected').text();
+        var area                = $('#area option:selected').text();
+        var name                = $('#name').val();
+        var tel                 = $('#tel').val();
+        var qq                  = $('#qq').val();
+        var introduce           = ue.getPlainTxt();
+        var company_video       = $('#company_video').val();
+        var company_authentication = $('#company_authentication').val();
+        var business             = $('#catList').val();
+        var data  = {"head_pic":head_pic,"company_name":company_name,"provinceId":provinceId,"cityId":cityId,"areaId":areaId,
+        "province":province,"city":city,"area":area,"name":name,"tel":tel,"qq":qq,"introduce":introduce,"company_video":company_video
+            ,'company_authentication':company_authentication,'business':business};
+        $.post('/admin/add/add',data,function (obj) {
+            if(obj==200){
+                layer.msg("添加成功");
+                setTimeout(function () {
+                    location.reload();
+                },1000);
+            }else{
+                layer.msg("可能缺少添加数据");
+            }
+        });
+    }
+
+    function select() {
+        layer.open({
+            type: 1,
+            skin: 'layui-layer-rim', //加上边框
+            area: ['1020px', '820px'], //宽高
+            content: $('.cat')
+        });
+    }
+    
+    
+    function getAll() {
+        var spCodesTemp = "";
+        $('input:checkbox[name=catList]:checked').each(function(i){
+            if(0==i){
+                spCodesTemp = $(this).val();
+            }else{
+                spCodesTemp += (","+$(this).val());
+            }
+        });
+        $('.cat').css({'display':'none'});
+        layer.closeAll();
+        $('#catList').val(spCodesTemp);
+    }
+</script>
+</html>

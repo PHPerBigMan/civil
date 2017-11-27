@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+{include file="layout/head"}
+
+<body class="sticky-header">
+
+<section>
+    <!-- left side start-->
+    {include file="layout/sidebar"}
+    <!-- left side end-->
+
+    <!-- main content start-->
+    <div class="main-content" >
+
+        <!-- header section start-->
+        <div class="header-section">
+
+
+
+        <!--search start-->
+        <!-- <form class="searchform" action="index.html" method="post">
+            <input type="text" class="form-control" name="keyword" placeholder="Search here..." />
+        </form> -->
+        <!--search end-->
+
+        <!--notification menu start -->
+       {include file="layout/header"}
+        <!--notification menu end -->
+
+        </div>
+        <!-- header section end-->
+
+        <!-- page heading start-->
+        <div class="page-heading">
+            <h3>
+                {$title}
+            </h3>
+
+        </div>
+
+
+        <div class="mt-20">
+            <table id="renzheng" class="display table table-bordered table-striped">
+
+            </table>
+        </div>
+
+        {include file="layout/footer"}
+        <!--footer section end-->
+
+
+    </div>
+    <!-- main content end-->
+</section>
+
+{include file="layout/js"}
+
+</body>
+<script>
+    function renzheng(id) {
+        layer.open({
+            title:'认证操作',
+            type: 2,
+            area: ['500px', '210px'],
+            fix: false, //不固定
+            maxmin: true,
+            content: '{:url("User/renzheng")}?id='+id,
+            success:function(layero,index){
+            },
+            end:function(){
+                if (parent.$("#handle_status").val() == 1) {
+                    layer.msg('添加成功！',{
+                        icon: 1,
+                        time: 1000
+                    },function(){
+                        history.go(0);
+                    });
+                    parent.$("#handle_status").val('0');
+                }
+            }
+        });
+    }
+
+    function more(id) {
+        window.location.href = "{:url('user/read')}"+"?id="+id+"&type=0";
+    }
+
+    $(function () {
+        $('#renzheng').DataTable({
+            "paging": true,
+            "lengthChange": true,
+            "processing": true,
+            "searching": true,
+            "ordering": false,
+            "info": true,
+            "autoWidth": false,
+            "ajax": "{:url('User/auth_ajax')}",
+            "columns": [
+                {"title": "企业名称", "data": "company_name"},
+                {"title": "企业分类", "data": "business"},
+                {"title": "营业执照", "data": "img"},
+                {"title": "认证等级", "data": "renzheng"},
+                {"title": "操作", "data": "caozuo"},
+            ]
+
+        });
+    });
+
+    $.extend($.fn.dataTable.defaults, {
+        language: {
+            "sProcessing": "处理中...",
+            "sLengthMenu": "显示 _MENU_ 项结果",
+            "sZeroRecords": "没有匹配结果",
+            "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+            "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+            "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+            "sInfoPostFix": "",
+            "sSearch": "搜索:",
+            "sUrl": "",
+            "sEmptyTable": "表中数据为空",
+            "sLoadingRecords": "载入中...",
+            "sInfoThousands": ",",
+            "oPaginate": {
+                "sFirst": "首页",
+                "sPrevious": "上页",
+                "sNext": "下页",
+                "sLast": "末页"
+            },
+            "oAria": {
+                "sSortAscending": ": 以升序排列此列",
+                "sSortDescending": ": 以降序排列此列"
+            }
+        },
+        buttons: true
+    });
+
+
+</script>
+</html>

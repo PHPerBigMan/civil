@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+{include file="layout/head"}
+
+<body class="sticky-header">
+
+<section>
+    {include file="layout/sidebar"}
+    <div class="main-content" >
+
+        <div class="header-section">
+       {include file="layout/header"}
+
+        </div>
+        <div class="page-heading">
+            <h3>
+                企业公告列表
+            </h3>
+
+        </div>
+
+        <div class="mt-20">
+            <table id="notice" class="display table table-bordered table-striped">
+
+            </table>
+        </div>
+        {include file="layout/footer"}
+
+
+    </div>
+</section>
+
+{include file="layout/js"}
+
+</body>
+<script>
+    function more(id) {
+        window.location.href = "{:url('user/read')}"+"?id="+id+"&type=2";
+    }
+
+    function get(id) {
+        window.location.href = "{:url('notice/read')}"+"?id="+id;
+    }
+    function tuijian(id) {
+        $.post("{:url('user/T_edit')}",
+            {
+                id: id
+            }, function (data, status) {
+                if(data.status == 100 ){
+                    layer.msg(data.msg)
+                    var val= document.getElementById(id);
+                    val.innerText='取消推荐';
+                }else if(data.status == 101){
+                    layer.msg(data.msg)
+                    var val= document.getElementById(id);
+                    val.innerText='推荐';
+                }
+            });
+    }
+
+
+
+    $(function () {
+        $('#notice').DataTable({
+            "paging": true,
+            "lengthChange": true,
+            "processing": true,
+            "searching": true,
+            "ordering": false,
+            "info": true,
+            "autoWidth": false,
+            "ajax": "{:url('Notice/user_notice_ajax')}",
+            "columns": [
+                {"title": "发布者", "data": "user_name"},
+                {"title": "公告内容", "data": "notice_content"},
+                {"title": "公告分类", "data": "c_name"},
+                {"title": "发布时间", "data": "create_time"},
+                {"title": "操作", "data": "caozuo"},
+            ]
+
+        });
+    });
+
+    $.extend($.fn.dataTable.defaults, {
+        language: {
+            "sProcessing": "处理中...",
+            "sLengthMenu": "显示 _MENU_ 项结果",
+            "sZeroRecords": "没有匹配结果",
+            "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+            "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+            "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+            "sInfoPostFix": "",
+            "sSearch": "搜索:",
+            "sUrl": "",
+            "sEmptyTable": "表中数据为空",
+            "sLoadingRecords": "载入中...",
+            "sInfoThousands": ",",
+            "oPaginate": {
+                "sFirst": "首页",
+                "sPrevious": "上页",
+                "sNext": "下页",
+                "sLast": "末页"
+            },
+            "oAria": {
+                "sSortAscending": ": 以升序排列此列",
+                "sSortDescending": ": 以降序排列此列"
+            }
+        },
+        buttons: true
+    });
+
+
+    function del(id) {
+        layer.confirm("确认要删除吗?",function () {
+            $.post("{:url('notice/del_u_notice')}",{id:id},function (data) {
+                if(data.code == 200){
+                    layer.msg("删除成功",{icon:1,time:2});
+                    setTimeout(function () {
+                        location.reload();
+                    },1000);
+                }else{
+                    layer.msg("删除失败")
+                }
+            })
+        })
+    }
+</script>
+</html>
